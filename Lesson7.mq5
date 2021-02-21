@@ -10,8 +10,10 @@ CTrade trade;
 input double TPPoint = 1000;
 input double TSPoint = 500;
 
-int dem = 0; // Dem tong lenh duoc auto dat SL, TP
-int cmd = 0; // So lenh dang ton toi
+// Dem tong lenh duoc auto dat SL, TP
+int dem = 0; 
+// So lenh dang ton toi
+int cmd = 0; 
 
 double PriceUp_TS = 0;
 double PriceDown_TS = 0;
@@ -53,14 +55,14 @@ void AutoSL() {
                  
          if (positionSymbol == _Symbol && P_SL == 0 && P_TYPE == POSITION_TYPE_BUY) {
             trade.PositionModify(positionTicket, AskDown, AskUp);
-            PriceUp_TS = NormalizeDouble(AskUp - TPPoint * _Point / 2, 5);
-            PriceDown_TS = NormalizeDouble(AskDown + TPPoint * _Point / 2, 5);
+            PriceUp_TS = NormalizeDouble(AskUp - TSPoint * _Point / 2, 5);
+            PriceDown_TS = NormalizeDouble(AskDown + TSPoint * _Point / 2, 5);
          }
          
          if (positionSymbol == _Symbol && P_SL == 0 && P_TYPE == POSITION_TYPE_SELL) {
             trade.PositionModify(positionTicket, AskUp, AskDown);
-            PriceUp_TS = NormalizeDouble(AskUp - TPPoint * _Point / 2, 5);
-            PriceDown_TS = NormalizeDouble(AskDown + TPPoint * _Point / 2, 5);
+            PriceUp_TS = NormalizeDouble(AskUp - TSPoint * _Point / 2, 5);
+            PriceDown_TS = NormalizeDouble(AskDown + TSPoint * _Point / 2, 5);
          }
          
          if (positionSymbol == _Symbol) {
@@ -96,8 +98,8 @@ void AutoSL() {
 void TrailingStop() {
    if (PositionSelect(_Symbol) == true) {
       double Ask = SymbolInfoDouble(Symbol(), SYMBOL_ASK);
-      double PriceUp = NormalizeDouble(Ask + TPPoint * _Point, 5);
-      double PriceDown = NormalizeDouble(Ask - TPPoint * _Point, 5);
+      double PriceUp = NormalizeDouble(Ask + TSPoint * _Point, 5);
+      double PriceDown = NormalizeDouble(Ask - TSPoint * _Point, 5);
       
       if (Ask >= PriceUp_TS || Ask <= PriceDown_TS) {
          for (int i = PositionsTotal() - 1; i >= 0; i--) {
@@ -110,8 +112,8 @@ void TrailingStop() {
             
             if (positionSymbol == _Symbol && P_TYPE == POSITION_TYPE_BUY && Ask >= PriceUp_TS) {
                trade.PositionModify(positionTicket, PriceDown, PriceUp);
-               PriceUp_TS = NormalizeDouble(PriceUp - TPPoint * _Point / 2, 5);
-               PriceDown_TS = NormalizeDouble(PriceDown + TPPoint * _Point / 2, 5);
+               PriceUp_TS = NormalizeDouble(PriceUp - TSPoint * _Point / 2, 5);
+               PriceDown_TS = NormalizeDouble(PriceDown + TSPoint * _Point / 2, 5);
                
                if (AP == 1) {
                   ObjectDelete(0, "PriceUp_TS");
@@ -124,8 +126,8 @@ void TrailingStop() {
          
             if (positionSymbol == _Symbol && P_TYPE == POSITION_TYPE_SELL && Ask <= PriceDown_TS) {
                trade.PositionModify(positionTicket, PriceUp, PriceDown);
-               PriceUp_TS = NormalizeDouble(PriceUp - TPPoint * _Point / 2, 5);
-               PriceDown_TS = NormalizeDouble(PriceDown + TPPoint * _Point / 2, 5);
+               PriceUp_TS = NormalizeDouble(PriceUp - TSPoint * _Point / 2, 5);
+               PriceDown_TS = NormalizeDouble(PriceDown + TSPoint * _Point / 2, 5);
                
                if (AP == 1) {
                   ObjectDelete(0, "PriceUp_TS");
