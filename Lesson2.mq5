@@ -63,5 +63,15 @@ void CheckBuySell() {
 }
 
 void Show() {
-
+   Comment(
+      "\n",
+      "Waitting Buy Price: ", string(PBUY), "\n",
+      "Watting Sell Price: ", string(PSELL), "\n",
+      "VOLUME: ", string(VOL), "\n",
+      "TP Point: ", string(TP), "\n",
+      "SL Point: ", string(SL), "\n",
+      "Order Count: ", string(orderCount), "\n",
+      "ASK Price: ", string(ask), "\n",
+      "BID Price: ", string(bid), "\n"
+   );
 }
